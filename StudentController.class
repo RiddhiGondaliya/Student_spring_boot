@@ -1,0 +1,59 @@
+package com.example.Student;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+public class StudentController {
+
+    @Autowired
+
+    StudentRepository studentRepository;
+
+    @RequestMapping(value = "/students", method = RequestMethod.GET)
+    @ResponseBody
+    Iterable<Student> getAllStudent() {
+
+        Student details = new Student("Riddhi", 98);
+        //created student list
+        List<Student> studentList = new ArrayList<>();
+        studentList.add(details);
+
+        return studentList;
+    }
+
+
+
+    @RequestMapping(value = "/students", method = RequestMethod.POST)
+    @ResponseBody
+
+    Student createStudent(@RequestBody Student student){
+        return  studentRepository.save(student);
+    }
+
+
+    @RequestMapping(value = "/students", method = RequestMethod.DELETE)
+    @ResponseBody
+
+    String deleteStudent(@RequestBody Student student) {
+        studentRepository.delete(student);
+        return "student " + student.getFirstName() + " Deleted";
+    }
+
+    @RequestMapping(value = "/students", method = RequestMethod.PUT)
+    @ResponseBody
+    Student updateStudent(@RequestBody Student student) {
+      return   studentRepository.save(student);
+
+    }
+
+
+
+
+
+
+
+}
